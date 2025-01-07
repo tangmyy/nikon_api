@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>3.4.1</version>
+        <relativePath /> <!-- lookup parent from repository -->
+    </parent>
+    <groupId>cn.edu.gench.zx_2220677</groupId>
+    <artifactId>NewYear_api</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <name>NewYear_api</name>
+    <description>NewYear_api</description>
+
+    <url/>
+    <!--列出项目使用的许可证信息-->
+    <licenses>
+        <license/>
+    </licenses>
+    <!--列出项目的开发人员-->
+    <developers>
+        <developer/>
+    </developers>
+    <!--提供项目的源码管理信息-->
+    <scm>
+        <connection/>
+        <developerConnection/>
+        <tag/>
+        <url/>
+    </scm>
+    <!--    可以统一管理版本    -->
+    <properties>
+        <java.version>17</java.version>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <!--开发环境热部署-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-devtools</artifactId>
+            <optional>true</optional>
+        </dependency>
+        <!-- Lombok简化pojo -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.18.28</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>8.0.28</version>
+            <scope>runtime</scope>
+        </dependency>
+        <!-- Kaptcha图形验证码 -->
+        <dependency>
+            <groupId>com.github.penggle</groupId>
+            <artifactId>kaptcha</artifactId>
+            <version>2.3.2</version>
+        </dependency>
+        <!-- Openai -->
+        <!--        <dependency>-->
+        <!--            <groupId>io.springboot.ai</groupId>-->
+        <!--            <artifactId>spring-ai-openai-spring-boot-starter</artifactId>-->
+        <!--            <version>1.0.0</version>-->
+        <!--        </dependency>-->
+        <!-- 科大讯飞星火认知大模型 -->
+        <!-- https://mvnrepository.com/artifact/com.google.code.gson/gson -->
+<!--
+        <dependency>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
+            <version>2.8.9</version>
+        </dependency>
+        &lt;!&ndash; https://mvnrepository.com/artifact/org.java-websocket/Java-WebSocket &ndash;&gt;
+        <dependency>
+            <groupId>org.java-websocket</groupId>
+            <artifactId>Java-WebSocket</artifactId>
+            <version>1.5.0</version>
+        </dependency>
+        &lt;!&ndash; https://mvnrepository.com/artifact/com.squareup.okhttp3/okhttp &ndash;&gt;
+        <dependency>
+            <groupId>com.squareup.okhttp3</groupId>
+            <artifactId>okhttp</artifactId>
+            <version>4.10.0</version>
+        </dependency>
+        &lt;!&ndash; https://mvnrepository.com/artifact/com.squareup.okio/okio &ndash;&gt;
+        <dependency>
+            <groupId>com.squareup.okio</groupId>
+            <artifactId>okio</artifactId>
+            <version>3.4.0</version>
+        </dependency>
+        &lt;!&ndash; fastjson库的依赖 &ndash;&gt;
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+            <version>2.0.0</version>
+        </dependency>
+-->
+
+
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>
