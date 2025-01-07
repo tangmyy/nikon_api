@@ -1,0 +1,16 @@
+package cn.edu.gench.zx_2220677.newyear_api.pojo;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import java.time.LocalDateTime;
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+public class Wishlist {
+    private Long wishlistId; // 愿望单 ID
+    private Long userId; // 用户 ID
+    private Long imageId; // 图片 ID
+    private LocalDateTime addedAt; // 图片添加到愿望单的时间，默认为当前时间戳
+}
