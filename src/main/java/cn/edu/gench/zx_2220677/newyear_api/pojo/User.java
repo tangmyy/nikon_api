@@ -30,9 +30,10 @@ public class User {
     private String phone;         // 手机号
     private String email;         // 邮箱
     private BigDecimal balance;   // 点数余额
-    private String status;        // 用户状态（"ACTIVE" 或 "BANNED"）
+    private Role role;                      // 用户角色：USER普通用户，ADMIN管理员
+    private String status;                  // 用户状态（"ACTIVE" 或 "BANNED"）
+    private boolean isDeleted;              // 是否已删除，默认为 false
     private LocalDateTime registrationTime; // 注册时间
-    private boolean isDeleted; // 是否已删除，默认为 false
 
 
 }
