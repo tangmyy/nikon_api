@@ -32,7 +32,7 @@ public class User {
     private BigDecimal balance;   // 点数余额
     private String status;        // 用户状态（"ACTIVE" 或 "BANNED"）
     private LocalDateTime registrationTime; // 注册时间
-
+    private boolean isDeleted; // 是否已删除，默认为 false
 
 
 }

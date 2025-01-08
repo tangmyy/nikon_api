@@ -20,6 +20,7 @@ public class HelloController {
 
     @GetMapping("/hello")
     public String hello(String nickname, String phone){
+        System.out.println("/hello");
         return "张行是天才:" + nickname + "编号:" + phone;
     }
 
