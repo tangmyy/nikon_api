@@ -7,11 +7,12 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 
+import javax.management.relation.Role;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 
-//@TableName("mingming") 为mybatis-plus 中的 BaesMapper<~~~>提供于类不同的表名若类名和表名相同则不需要注解
+//@TableName("zhangxing") 为mybatis-plus 中的 BaesMapper<~~~>提供于类不同的表名若类名和表名相同则不需要注解
 @TableName("users")
 @Data
 @NoArgsConstructor
@@ -30,9 +31,20 @@ public class User {
     private String phone;         // 手机号
     private String email;         // 邮箱
     private BigDecimal balance;   // 点数余额
+    private Role role;                // 用户角色：USER普通用户，ADMIN管理员
     private String status;        // 用户状态（"ACTIVE" 或 "BANNED"）
     private LocalDateTime registrationTime; // 注册时间
     private boolean isDeleted; // 是否已删除，默认为 false
 
+    // 用户角色枚举
+    public enum Role {
+        USER,
+        ADMIN
+    }
+
+    // 判断管理员身份方法
+    public boolean isAdmin() {
+        return "ADMIN".equals(this.role.toString());
+    }
 
 }

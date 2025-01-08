@@ -7,6 +7,7 @@ import cn.edu.gench.zx_2220677.newyear_api.util.PasswordUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -18,9 +19,12 @@ public class UsersServiceImpl implements UsersService {
 
     @Autowired
     private UsersMapper usersMapper;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @Override
     public boolean register(User user) {
+        // 注册前 检查
         if (isUsernameTaken(user.getUsername())) {
             logger.info("用户名 {} 已被占用", user.getUsername());
             throw new IllegalArgumentException("用户名已被占用");
@@ -29,9 +33,20 @@ public class UsersServiceImpl implements UsersService {
             logger.info("邮箱 {} 已被占用", user.getEmail());
             throw new IllegalArgumentException("邮箱已被占用");
         }
+
+        // 设置用户参数
+        String encryptedPassword = passwordEncoder.encode(user.getPassword());
+        user.setPassword(encryptedPassword);
+        // 更新为 ↑ Security加密 不再使用 ⬇ MD5
+        // user.setPassword(PasswordUtil.encodePassword(user.getPassword()));
+        // 默认role设为USER
+        user.setRole(User.Role.USER);
         user.setRegistrationTime(LocalDateTime.now());
-        user.setPassword(PasswordUtil.encodePassword(user.getPassword()));
+
+        // 注入
         int result = usersMapper.insert(user);
+
+        // 输出结果
         if (result > 0) {
             logger.info("用户 {} 注册成功", user.getUsername());
         } else {
