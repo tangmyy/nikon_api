@@ -1,62 +1,41 @@
 package cn.edu.gench.zx_2220677.newyear_api.controller;
 
 import cn.edu.gench.zx_2220677.newyear_api.pojo.User;
-import cn.edu.gench.zx_2220677.newyear_api.mapper.UsersMapper;
-import org.springframework.beans.factory.annotation.Autowired;
+
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 
 @CrossOrigin
 @RestController
 public class UserController {
 
-    @Autowired
-    private UsersMapper usersMapper;
-
-    @GetMapping("/user")
-    public String query(){
-        List<User> list = usersMapper.selectList(null);
-        System.out.println(list);
-       return "查询用户";
-    }
-    @GetMapping("/user/Get")
-    public List<User> findAll(){
-        return usersMapper.selectAllUserAndOrders();
-    }
-
-    @PostMapping ("/user")
-    public String save(User user){
-
-        int i = usersMapper.insert(user);
-        System.out.println(i);
-        if (i > 0){
-            return "插入成功";
-        }else{
-            return "插入失败";
-        }
+    @Operation(summary = "根据ID获取用户信息", description = "此接口用于根据ID获取用户信息")
+    @ApiResponses(value = {
+          @ApiResponse(responseCode = "200", description = "成功返回基本信息", content = @Content(mediaType = "application/json")),
+          @ApiResponse(responseCode = "500", description = "服务器错误")
+    })
+    @Parameter(description = "/user/{id}", required = true, example = "getUserById()")
+    // 获取基本信息的接口
+    @GetMapping("/user/{id}")
+    public String getUserById(@PathVariable int id){
+        System.out.println(id);
+        return "根据ID获取用户信息";
     }
 
-    @DeleteMapping("/user")
-    public String delete(int id){
-        int i = usersMapper.deleteById(id);
-        System.out.println(i);
-        if(i > 0){
-            return "删除成功";
-        }else {
-            return "删除失败";
-        }
-    }
+    @PostMapping("/user")
+    public String save(User user) { return "添加用户"; }
 
     @PutMapping("/user")
-    public String update(User user){
-        int i = usersMapper.updateById(user);
-        System.out.println(i);
-        if(i > 0){
-            return "更新成功";
-        }else {
-            return "更新失败";
-        }
-    }
+    public String update(User user) { return "更新用户"; }
 
+    @DeleteMapping("/user/{id}")
+    public String deleteById(@PathVariable int id){
+        System.out.println(id);
+        return "根据ID删除用户";
+    }
 }
