@@ -10,13 +10,9 @@ import java.util.List;
 public interface CommentMapper extends BaseMapper<Comment> {
 
     // 插入评论
-    @Insert("INSERT INTO comment (parent_comment_id, image_id, user_id, comment_text) VALUES (#{parentCommentId}, #{imageId}, #{userId}, #{commentText})")
-    @Options(useGeneratedKeys = true, keyProperty = "param.commentId", keyColumn = "comment_id")
-    int insertComment(@Param("parentCommentId") Long parentCommentId,
-                      @Param("imageId") Long imageId,
-                      @Param("userId") Long userId,
-                      @Param("commentText") String commentText);
-
+    @Insert("INSERT INTO comment (parent_comment_id, image_id, user_id, comment_text) VALUES (#{comment.parentCommentId}, #{comment.imageId}, #{comment.userId}, #{comment.commentText})")
+    @Options(useGeneratedKeys = true, keyProperty = "comment.commentId", keyColumn = "comment_id")
+    int insertComment(@Param("comment") Comment comment);
 
     // 删除评论（只能由评论作者删除）
     @Delete("DELETE FROM comment WHERE comment_id = #{commentId} AND user_id = #{userId}")
@@ -33,6 +29,7 @@ public interface CommentMapper extends BaseMapper<Comment> {
     // 检查评论是否存在
     @Select("SELECT COUNT(1) FROM comment WHERE comment_id = #{commentId}")
     boolean existsComment(@Param("commentId") Long commentId);
+
 
 }
 
