@@ -1,7 +1,6 @@
 package cn.edu.gench.zx_2220677.newyear_api.mapper;
 
-
-import cn.edu.gench.springboot.mirror.pojo.Comment;
+import cn.edu.gench.zx_2220677.newyear_api.pojo.Comment;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.*;
 

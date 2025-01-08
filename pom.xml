@@ -84,6 +84,14 @@
             <version>3.5.5</version>
         </dependency>
 
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-core</artifactId>
+            <version>5.14.2</version> <!-- 根据您的需求调整版本 -->
+            <scope>test</scope>
+        </dependency>
+
+
         <!-- Openai -->
         <!--        <dependency>-->
         <!--            <groupId>io.springboot.ai</groupId>-->

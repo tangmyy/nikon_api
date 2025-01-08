@@ -1,6 +1,6 @@
 package cn.edu.gench.zx_2220677.newyear_api.mapper;
 
-import cn.edu.gench.springboot.mirror.pojo.Comment;
+import cn.edu.gench.zx_2220677.newyear_api.pojo.Comment;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.*;
 
@@ -10,13 +10,13 @@ import java.util.List;
 public interface CommentMapper extends BaseMapper<Comment> {
 
     // 插入评论
-    @Insert("INSERT INTO comment (parent_comment_id, image_id, user_id, comment_text) " +
-            "VALUES (#{parentCommentId}, #{imageId}, #{userId}, #{commentText})")
-    @Options(useGeneratedKeys = true, keyProperty = "commentId", keyColumn = "comment_id")
+    @Insert("INSERT INTO comment (parent_comment_id, image_id, user_id, comment_text) VALUES (#{parentCommentId}, #{imageId}, #{userId}, #{commentText})")
+    @Options(useGeneratedKeys = true, keyProperty = "param.commentId", keyColumn = "comment_id")
     int insertComment(@Param("parentCommentId") Long parentCommentId,
                       @Param("imageId") Long imageId,
                       @Param("userId") Long userId,
                       @Param("commentText") String commentText);
+
 
     // 删除评论（只能由评论作者删除）
     @Delete("DELETE FROM comment WHERE comment_id = #{commentId} AND user_id = #{userId}")
