@@ -122,8 +122,34 @@
             <artifactId>fastjson</artifactId>
             <version>2.0.0</version>
         </dependency>
--->
+-->   <dependency>
+        <groupId>org.junit.jupiter</groupId>
+        <artifactId>junit-jupiter-api</artifactId>
+        <version>5.11.4</version> <!-- 确保使用Junit 5 -->
+        <scope>test</scope>
+    </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-engine</artifactId>
+            <version>5.11.4</version> <!-- 确保使用Junit 5 -->
+            <scope>test</scope>
+        </dependency>
 
+        <!-- Mockito 核心库 -->
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-core</artifactId>
+            <version>5.5.0</version> <!-- 确保Mockito版本正确 -->
+            <scope>test</scope>
+        </dependency>
+
+        <!-- Mockito JUnit Jupiter 扩展 -->
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-junit-jupiter</artifactId>
+            <version>5.5.0</version>
+            <scope>test</scope>
+        </dependency>
 
     </dependencies>
 
