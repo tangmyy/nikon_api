@@ -10,10 +10,10 @@ CREATE TABLE users (
     phone VARCHAR(255) NOT NULL,                        -- 手机号
     email VARCHAR(255) NOT NULL,                        -- 邮箱
     balance DECIMAL(10, 2) DEFAULT 0.00,                -- 点数余额
-    role ENUM('USER','ADMIN') NOT NULL DEFAULT 'USER', -- 用户角色：USER普通用户，ADMIN管理员
-    status ENUM('ACTIVE', 'BANNED') DEFAULT 'ACTIVE',     -- 用户状态（活跃、封禁）
-    registration_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP, -- 注册时间
-    is_deleted BOOLEAN DEFAULT FALSE                              -- 是否已删除（软删除标志）
+    role ENUM('USER','ADMIN') NOT NULL DEFAULT 'USER',      -- 用户角色：USER普通用户，ADMIN管理员
+    status ENUM('ACTIVE', 'BANNED') DEFAULT 'ACTIVE',       -- 用户状态（活跃、封禁）
+    is_deleted BOOLEAN DEFAULT FALSE,                       -- 是否已删除（软删除标志）
+    registration_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP -- 注册时间
 );
 
 -- 2.相册表 album
