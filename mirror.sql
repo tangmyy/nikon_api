@@ -1,6 +1,6 @@
-create database mirror;
+create database newyear;
 
-use mirror;
+use newyear;
 
 -- 1.用户表 user
 CREATE TABLE users (
@@ -11,7 +11,8 @@ CREATE TABLE users (
     email VARCHAR(255) NOT NULL,                        -- 邮箱
     balance DECIMAL(10, 2) DEFAULT 0.00,                -- 点数余额
     status ENUM('ACTIVE', 'BANNED') DEFAULT 'ACTIVE',     -- 用户状态（活跃、封禁）
-    registration_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP -- 注册时间
+    registration_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP, -- 注册时间
+    is_deleted BOOLEAN DEFAULT FALSE                              -- 是否已删除（软删除标志）
 );
 
 -- 2.相册表 album
