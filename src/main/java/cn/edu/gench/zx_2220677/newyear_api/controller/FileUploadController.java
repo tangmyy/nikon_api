@@ -21,13 +21,13 @@ public class FileUploadController {
         // 获取文件类型
         System.out.println(photo.getContentType());
 
-        // String path = request.getServletContext().getRealPath("/upload/");
+        String path = request.getServletContext().getRealPath("/upload/");
         // 上面这个是使用动态的服务器路径，下面这个是固定的本地路径
         // 想要获取需要去application.properties中增加配置
-        String path = "C:\\Users/TAOER/Desktop";
+        // String path = "C:\\Users/TAOER/Desktop";
         System.out.println(path);
         saveFile(photo,path);
-        return "上传成功";
+        return "upload上传成功";
     }
 
     public void saveFile(MultipartFile photo,String path)throws IOException {
