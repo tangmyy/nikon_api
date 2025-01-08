@@ -6,6 +6,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @MapperScan("cn.edu.gench.zx_2220677.newyear_api.mapper")
 @SpringBootApplication
+// @MapperScan("cn.edu.gench.zx_2220677.newyear_api.mapper")
 public class NewYearApiApplication {
 
    public static void main(String[] args) {
