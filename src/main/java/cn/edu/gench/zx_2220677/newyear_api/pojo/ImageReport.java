@@ -1,4 +1,6 @@
 package cn.edu.gench.zx_2220677.newyear_api.pojo;
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -8,6 +10,9 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ImageReport {
+
+    @TableId(type = IdType.AUTO)
+
     private Long reportId; // 举报记录 ID
     private Long imageId; // 被举报的图片 ID
     private Long userId; // 举报用户的 ID

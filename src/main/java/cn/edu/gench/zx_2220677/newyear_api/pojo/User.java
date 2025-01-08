@@ -17,7 +17,13 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 public class User {
+
+    // 分布式 ID（雪花算法）：MyBatis Plus 自动生成全局唯一的主键，适用于分布式系统。
+    // UUID：MyBatis Plus 自动生成 UUID 作为主键。
+    // @TableId(type = IdType.ASSIGN_ID)
+    // @TableId(type = IdType.ASSIGN_UUID)
     @TableId(type = IdType.AUTO)
+
     private Long userId;          // 用户 ID
     private String username;      // 用户名
     private String password;      // 密码

@@ -1,4 +1,6 @@
 package cn.edu.gench.zx_2220677.newyear_api.pojo;
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -8,6 +10,9 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Comment {
+
+    @TableId(type = IdType.AUTO)
+
     private Long commentId; // 评论 ID
     private Long parentCommentId; // 上级评论 ID（用于回复评论）
     private Long imageId; // 图片 ID
