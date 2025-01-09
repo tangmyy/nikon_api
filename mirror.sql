@@ -98,6 +98,7 @@ CREATE TABLE blacklist (
                            reason TEXT DEFAULT NULL,                               -- 被列入黑名单的原因
                            start_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,         -- 开始时间
                            end_time TIMESTAMP DEFAULT NULL,                        -- 结束时间（可为空，代表永久封禁）
+                           is_deleted BOOLEAN DEFAULT FALSE,                       -- 是否已删除（软删除标志）
                            blacklist_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP          -- 添加到黑名单的时间
 );
 
