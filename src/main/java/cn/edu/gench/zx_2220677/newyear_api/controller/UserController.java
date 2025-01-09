@@ -73,7 +73,7 @@ public class UserController {
 
             return ResponseEntity.ok("登录成功");
         } else {
-            logger.info("用户 {} 登录失败", user.getUsername());
+            logger.info("用户 {} 登录失败，用户名或密码错误", user.getUsername());
             return ResponseEntity.status(401).body("登录失败，用户名或密码错误");
         }
     }

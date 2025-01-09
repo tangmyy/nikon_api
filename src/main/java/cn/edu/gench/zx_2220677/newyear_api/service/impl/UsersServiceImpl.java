@@ -37,7 +37,7 @@ public class UsersServiceImpl implements UsersService {
         // 设置用户参数
         String encryptedPassword = passwordEncoder.encode(user.getPassword());
         user.setPassword(encryptedPassword);
-        // 更新为 ↑ Security加密 不再使用 ⬇ MD5
+        // 更新为 ↑ Security加密 不再使用 MD5加密
         // user.setPassword(PasswordUtil.encodePassword(user.getPassword()));
         // 默认role设为USER
         user.setRole(User.Role.USER);
@@ -58,7 +58,7 @@ public class UsersServiceImpl implements UsersService {
     @Override
     public User login(String username, String password) {
         User user = usersMapper.findByUsername(username);
-        if (user != null && PasswordUtil.matches(password, user.getPassword())) {
+        if (user != null && passwordEncoder.matches(password, user.getPassword())) {
             logger.info("用户 {} 登录成功", username);
             return user;
         }
