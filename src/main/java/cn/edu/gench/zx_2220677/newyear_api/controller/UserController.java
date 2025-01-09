@@ -1,8 +1,11 @@
 package cn.edu.gench.zx_2220677.newyear_api.controller;
 
 import cn.edu.gench.zx_2220677.newyear_api.pojo.User;
-
 import cn.edu.gench.zx_2220677.newyear_api.service.UsersService;
+import cn.edu.gench.zx_2220677.newyear_api.mapper.UsersMapper;
+
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -18,7 +21,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Enumeration;
-
+import java.util.List;
 
 @CrossOrigin
 @RestController
@@ -109,5 +112,30 @@ public class UserController {
             return ResponseEntity.status(401).body("用户未登录");
         }
     }
+
+    @Autowired
+    private UsersMapper usersMapper;
+
+    // 查询所有用户：http://localhost:8088/api/users/findAllIpage
+    @GetMapping("findAllIpage")
+    public IPage findAllIpage(){
+        //设置起始值及每页条数
+        Page<User> page = new Page<>(0,2);
+        IPage iPage = usersMapper.selectPage(page,null);
+        return iPage;
+    }
+
+    // 查询所有用户：http://localhost:8088/api/users/findAll
+    @GetMapping("/findAll")
+    public ResponseEntity<List<User>> selectList() {
+        // 查询所有用户，传入 null 表示没有条件限制
+        List<User> users = usersMapper.selectList(null);
+        // 返回查询结果，HTTP 状态码 200 OK
+        return ResponseEntity.ok(users);
+    }
+
+
+
+
 
 }
