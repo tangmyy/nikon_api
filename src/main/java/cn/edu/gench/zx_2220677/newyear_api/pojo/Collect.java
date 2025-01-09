@@ -10,16 +10,12 @@ import java.time.LocalDateTime;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ImageLike {
+public class Collect {
 
     @TableId(type = IdType.AUTO)
 
-    private Long likeId; // 点赞记录 ID
-    private Long imageId; // 图片 ID
+    private Long favoriteId; // 收藏记录 ID
     private Long userId; // 用户 ID
-    private Long value; // 评分
-    private LocalDateTime createdAt; // 点赞时间，默认为当前时间戳
-
-
-
+    private Long imageId; // 收藏的图片 ID
+    private LocalDateTime collectTime; // 收藏时间，默认为当前时间戳
 }

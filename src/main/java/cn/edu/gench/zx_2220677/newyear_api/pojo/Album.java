@@ -21,6 +21,6 @@ public class Album {
     private String tag; // 标签名称
     private String description; // 图片描述
     private Long userId; // 上传用户 ID
-    private LocalDateTime uploadedTime; // 图片上传时间，默认为当前时间戳
     private boolean isDeleted; // 是否已删除，默认为 false
+    private LocalDateTime uploadedTime; // 图片上传时间，默认为当前时间戳
 }
