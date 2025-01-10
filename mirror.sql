@@ -22,8 +22,9 @@ CREATE TABLE album (
                        file_name VARCHAR(255) NOT NULL,                               -- 图片文件名
                        file_path VARCHAR(255) NOT NULL,                               -- 图片存储路径
                        visibility ENUM('PUBLIC', 'PRIVATE') DEFAULT 'PUBLIC',        -- 图片可见性（公共、私人）
-                       tag VARCHAR(100) DEFAULT NULL,                            -- 标签名称（直接存储标签）
                        description TEXT DEFAULT NULL,                                -- 图片描述
+                       tag VARCHAR(100) DEFAULT NULL,                            -- 标签名称（直接存储标签）
+                       price DECIMAL(10, 2) NOT NULL,                              -- 图片单价
                        user_id BIGINT NOT NULL,                                       -- 上传用户 ID
                        is_deleted BOOLEAN DEFAULT FALSE,                              -- 是否已删除（软删除标志）
                        uploaded_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP            -- 图片上传时间
