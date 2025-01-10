@@ -33,7 +33,6 @@ public class AlbumController {
                              @RequestParam("tag") String tag,
                              @RequestParam("price") BigDecimal price,
                              @RequestParam("userId") Long userId) {
-        // 七牛云传输
 
         Album album = new Album(null, fileName, filePath, visibility, description, tag, price, userId, false, LocalDateTime.now());
         return albumService.uploadImage(album);

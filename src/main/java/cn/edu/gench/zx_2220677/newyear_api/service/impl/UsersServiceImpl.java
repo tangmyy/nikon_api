@@ -19,6 +19,7 @@ public class UsersServiceImpl implements UsersService {
 
     @Autowired
     private UsersMapper usersMapper;
+
     @Autowired
     private PasswordEncoder passwordEncoder;
 
