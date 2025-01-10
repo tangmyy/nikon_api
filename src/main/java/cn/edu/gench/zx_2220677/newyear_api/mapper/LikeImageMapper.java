@@ -1,23 +1,20 @@
 package cn.edu.gench.zx_2220677.newyear_api.mapper;
 
 
-import cn.edu.gench.zx_2220677.newyear_api.pojo.ImageLike;
+import cn.edu.gench.zx_2220677.newyear_api.pojo.LikeImage;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import org.apache.ibatis.annotations.Delete;
-import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
 
 @Mapper
-public interface ImageLikeMapper extends BaseMapper<ImageLike> {
+public interface LikeImageMapper extends BaseMapper<LikeImage> {
 
     // 查询某张图片的所有点赞记录
-    List<ImageLike> findLikesByImageId(Long imageId);
+    List<LikeImage> findLikesByImageId(Long imageId);
 
     // 查询用户对某张图片的点赞记录
-    ImageLike findLikeByUserIdAndImageId(Long userId, Long imageId);
+    LikeImage findLikeByUserIdAndImageId(Long userId, Long imageId);
 
     // 查询某张图片的点赞总数
     Long countLikesByImageId(Long imageId);

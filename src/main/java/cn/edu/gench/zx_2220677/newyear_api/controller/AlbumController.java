@@ -9,6 +9,8 @@ import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.*;
 
 
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -20,6 +22,24 @@ public class AlbumController {
 
     @Resource
     private AlbumService albumService;
+
+    // 图片上传
+    @Operation(summary = "图片上传接口", description = "此接口用于用户上传图片")
+    @PostMapping("/upload")
+    public Album uploadImage(@RequestParam("fileName") String fileName,
+                             @RequestParam("filePath") String filePath,
+                             @RequestParam("visibility") String visibility,
+                             @RequestParam("description") String description,
+                             @RequestParam("tag") String tag,
+                             @RequestParam("price") BigDecimal price,
+                             @RequestParam("userId") Long userId) {
+        // 七牛云传输
+
+        Album album = new Album(null, fileName, filePath, visibility, description, tag, price, userId, false, LocalDateTime.now());
+        return albumService.uploadImage(album);
+    }
+
+
 
     // 根据标签查询图片
     @Operation(summary = "标签查询接口", description = "此接口用于用户按标签查询图片")

@@ -16,6 +16,13 @@ public class AlbumServiceImpl extends ServiceImpl<AlbumMapper, Album> implements
     @Resource
     private AlbumMapper albumMapper;
 
+
+    // 上传图片
+    @Override
+    public Album uploadImage(Album album) {
+        return albumMapper.uploadImage(album);
+    }
+
     // 根据标签查询图片
     @Override
     public List<Album> findImagesByTag(String tag) {

@@ -11,6 +11,9 @@ import java.util.List;
 
 public interface AlbumService extends IService<Album> {
 
+    // 上传图片
+    Album uploadImage(Album album);
+
     // 根据标签查找
     List<Album> findImagesByTag(String tag);
 

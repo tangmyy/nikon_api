@@ -5,7 +5,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.*;
 
 @Mapper
-public interface CommentLikeMapper extends BaseMapper<Comment> {
+public interface LikeCommentMapper extends BaseMapper<Comment> {
 
     // 插入评论点赞记录
     int insertCommentLike(@Param("userId") Long userId, @Param("commentId") Long commentId);
