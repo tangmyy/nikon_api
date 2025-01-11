@@ -16,10 +16,10 @@ public class Announcement {
     @TableId(type = IdType.AUTO)
 
     private Long announcementId; // 公告 ID
+    private Long createdAdminId; // 创建公告的管理员 ID
     private String title; // 公告标题
     private String content; // 公告内容
-    private Long createdBy; // 创建公告的管理员 ID
-    private LocalDateTime createdAt; // 创建时间，默认为当前时间戳
+    private LocalDateTime createdTime; // 创建时间，默认为当前时间戳
 
 
 }

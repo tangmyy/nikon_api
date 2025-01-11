@@ -17,5 +17,5 @@ public class Wishlist {
     private Long wishlistId; // 愿望单 ID
     private Long userId; // 用户 ID
     private Long imageId; // 图片 ID
-    private LocalDateTime addedAt; // 图片添加到愿望单的时间，默认为当前时间戳
+    private LocalDateTime addTime; // 图片添加到愿望单的时间，默认为当前时间戳
 }

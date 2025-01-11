@@ -19,6 +19,6 @@ public class Comment {
     private Long userId; // 用户 ID
     private String commentText; // 评论内容
     private boolean isLiked; // 是否点赞，默认为 false
-    private LocalDateTime createdAt; // 创建时间，默认为当前时间戳
+    private LocalDateTime createdTime; // 创建时间，默认为当前时间戳
 
 }
