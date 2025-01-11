@@ -17,5 +17,5 @@ public class AnnouncementRead {
 
     private Long userId; // 用户 ID
     private Long announcementId; // 公告 ID
-    private LocalDateTime readAt; // 阅读时间，默认为当前时间戳
+    private LocalDateTime readTime; // 阅读时间，默认为当前时间戳
 }

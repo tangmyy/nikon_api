@@ -19,5 +19,5 @@ public class OrderDetail {
     private Long photoId; // 图片 ID
     private BigDecimal price; // 图片单价
     private int quantity; // 图片购买数量，默认为 1
-    private LocalDateTime createdAt; // 记录创建时间，默认为当前时间戳
+    private LocalDateTime createdTime; // 记录创建时间，默认为当前时间戳
 }
