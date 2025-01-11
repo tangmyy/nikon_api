@@ -1,6 +1,8 @@
 package cn.edu.gench.zx_2220677.newyear_api;
 
+
 import com.google.gson.Gson;
+
 import com.qiniu.cdn.CdnManager;
 import com.qiniu.common.QiniuException;
 import com.qiniu.http.Response;
@@ -63,16 +65,15 @@ public class OOSTest {
       // String key = Filename;
 
       try {
-         //修改 注释掉，默认上传 字符串，写自己的上传格式（上传图片）
-         // byte[] uploadBytes = "hello qiniu cloud".getBytes("utf-8");
-         // ByteArrayInputStream byteInputStream=new ByteArrayInputStream(uploadBytes);
          //上传文件——图片格式（本机绝对路径）
          InputStream inputStream = new FileInputStream("C:\\Users\\TAOER\\Desktop\\精选\\" + Filename);
+         // byte[] uploadBytes = "hello qiniu cloud".getBytes("utf-8");
+         // ByteArrayInputStream byteInputStream=new ByteArrayInputStream(uploadBytes);
          Auth auth = Auth.create(accessKey, secretKey);  //创建凭证
          String upToken = auth.uploadToken(bucket);      //上传凭证
 
          try {
-            // Response response = uploadManager.put(byteInputStream,key,upToken,null, null);
+            // Response response = uploadManager.put(byteInputStream,Filename,upToken,null, null);
             Response response = uploadManager.put(inputStream,Filename,upToken,null, null);
             //解析上传成功的结果
             DefaultPutRet putRet = new Gson().fromJson(response.bodyString(), DefaultPutRet.class);
@@ -91,9 +92,10 @@ public class OOSTest {
             }
          }
       // } catch (UnsupportedEncodingException ex) {
-      } catch (Exception  ex) {
+      } catch (Exception ex) {
          //ignore  异常类型 改大一点
       }
+
    }
 
    @Test

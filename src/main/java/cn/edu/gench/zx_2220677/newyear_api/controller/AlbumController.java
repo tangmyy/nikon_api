@@ -15,7 +15,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -23,12 +22,10 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/api/images")
-public class AlbumController2 {
+public class AlbumController {
 
    @Resource
    private AlbumService albumService;
-
-
 
    // 图片上传
    @Operation(summary = "图片上传接口", description = "此接口用于用户上传图片")
@@ -50,9 +47,6 @@ public class AlbumController2 {
          return "上传失败";
       }
    }
-
-
-
 
 
    // 根据标签查询图片
