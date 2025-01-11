@@ -35,7 +35,6 @@ public class AlbumServiceImpl extends ServiceImpl<AlbumMapper, Album> implements
     @Resource
     private AlbumMapper albumMapper;
 
-
     @Override
     public String uploadImage(MultipartFile file, String isPublic, String description, String tagsJson, BigDecimal price, Long userId) throws IOException{
         if (file.isEmpty()) {
@@ -44,10 +43,8 @@ public class AlbumServiceImpl extends ServiceImpl<AlbumMapper, Album> implements
         String originalFileName = file.getOriginalFilename();
         String fileExtension = originalFileName.substring(originalFileName.lastIndexOf("."));
         String newFileName = UUID.randomUUID().toString() + fileExtension;
-
         saveFile(file, newFileName);
         String filePath = "http://spvr95gcs.hd-bkt.clouddn.com/" + newFileName;
-
         Album album = new Album();
         album.setUserId(userId);
         album.setFileName(newFileName);
@@ -56,18 +53,36 @@ public class AlbumServiceImpl extends ServiceImpl<AlbumMapper, Album> implements
         album.setDescription(description);
         album.setPrice(price);
         album.setUploadedTime(LocalDateTime.now());
-
         System.out.println("tagsJson: " + tagsJson);          // 检查点：输出 tagsJson 内容
         ObjectMapper objectMapper = new ObjectMapper();       // 使用ObjectMapper将JSON数组转换为String
         List<String> tagsList = objectMapper.readValue(tagsJson, new TypeReference<List<String>>() {});
         String tagsString = String.join(";", tagsList);
         album.setTags(tagsString);
-
         albumMapper.insert(album);                           // 将图片插入到表中
-
         System.out.println("filePath= "+ filePath);
         return "上传成功";
     }
+
+    @Override
+    public List<Album> findAllImages() {
+        return albumMapper.findAllPublicImages();
+    }
+
+    @Override
+    public String deleteImage(Long imageId) {
+        return "";
+    }
+
+    @Override
+    public String updateImage(Long imageId, String isPublic, String description, String tagsJson, BigDecimal price, Long userId) throws IOException {
+        return "";
+    }
+
+    @Override
+    public List<Album> findImagesByUserId(Long userId) {
+        return List.of();
+    }
+
 
     // 保存文件到上传文件路径
     private void saveFile(MultipartFile file, String fileName) throws IOException {
@@ -97,7 +112,6 @@ public class AlbumServiceImpl extends ServiceImpl<AlbumMapper, Album> implements
 
             try {
                 Response response = uploadManager.put(uploadBytes, fileName, upToken);
-
                 //解析上传成功的结果
                 DefaultPutRet putRet = new Gson().fromJson(response.bodyString(), DefaultPutRet.class);
                 System.out.println(putRet.key);
@@ -117,73 +131,5 @@ public class AlbumServiceImpl extends ServiceImpl<AlbumMapper, Album> implements
         } catch (UnsupportedEncodingException ex) {
             //ignore
         }
-    }
-
-    // 查询所有公开的图片
-    @Override
-    public List<Album> findAllPublicImages() {
-        return albumMapper.findAllPublicImages();
-    }
-
-    // 查询所有私人的图片
-    @Override
-    public List<Album> findPrivateImages() {
-        return albumMapper.findPrivateImages();
-    }
-
-    // 根据标签查询图片
-    @Override
-    public List<Album> findImagesByTag(String tag) {
-        return albumMapper.findImagesByTag(tag);
-    }
-
-    // 按描述模糊查询图片
-    @Override
-    public List<Album> findByDescription(String description) {
-        return albumMapper.findByDescription(description);
-    }
-
-
-
-    // 按上传时间（升序）查询图片
-    @Override
-    public List<Album> findUploadUp() {
-        return albumMapper.findUploadUp();
-    }
-
-    // 按上传时间（降序）查询图片
-    @Override
-    public List<Album> findUploadDecline() {
-        return albumMapper.findUploadDecline();
-    }
-
-    // 根据条件+分页查询图片
-    // orderBy 是一个动态参数，用于指定排序顺序
-    // "asc" 表示升序，"desc" 表示降序
-    @Override
-    public IPage<Album> findAlbumsWithConditions(Page<Album> page, String tag, String visibility, String description, String orderBy) {
-        QueryWrapper<Album> queryWrapper = new QueryWrapper<>();
-
-        // 添加条件筛选
-        if (tag != null && !tag.isEmpty()) {
-            queryWrapper.eq("tag", tag);
-        }
-        if (visibility != null && !visibility.isEmpty()) {
-            queryWrapper.eq("visibility", visibility);
-        }
-        if (description != null && !description.isEmpty()) {
-            queryWrapper.like("description", description);
-        }
-        queryWrapper.eq("is_deleted", false); // 过滤软删除的数据
-
-        // 按上传时间排序
-        if ("asc".equalsIgnoreCase(orderBy)) {
-            queryWrapper.orderByAsc("uploaded_time");
-        } else if ("desc".equalsIgnoreCase(orderBy)) {
-            queryWrapper.orderByDesc("uploaded_time");
-        }
-
-        // 返回分页结果
-        return baseMapper.selectPage(page, queryWrapper);
     }
 }
