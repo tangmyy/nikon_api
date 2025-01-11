@@ -2,8 +2,6 @@ package cn.edu.gench.zx_2220677.newyear_api.controller;
 
 import org.springframework.web.bind.annotation.*;
 
-import cn.edu.gench.zx_2220677.newyear_api.pojo.User;
-
 
 @RestController
 public class HelloController {

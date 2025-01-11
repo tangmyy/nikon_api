@@ -1,164 +1,39 @@
 package cn.edu.gench.zx_2220677.newyear_api.controller;
 
-import cn.edu.gench.zx_2220677.newyear_api.pojo.User;
-import cn.edu.gench.zx_2220677.newyear_api.service.UsersService;
-import cn.edu.gench.zx_2220677.newyear_api.mapper.UsersMapper;
-
-import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
-import jakarta.servlet.http.Cookie;
-import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Enumeration;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 @CrossOrigin
 @RestController
-@RequestMapping("/api/users")
 public class UserController {
 
-    private static final Logger logger = LoggerFactory.getLogger(UserController.class);
-
-    @Autowired
-    private UsersService usersService;
-
-    @Operation(summary = "注册接口", description = "此接口用于用户注册接口")
-    // @ApiResponses(value = {
-    //       @ApiResponse(responseCode = "200", description = "成功注册", content = @Content(mediaType = "application/json")),
-    //       @ApiResponse(responseCode = "500", description = "服务器错误")
-    // })
-    // @Parameter(description = "/register", required = true, example = "usersService.register(user)")
-    // 注册接口
-    @PostMapping("/register")
-    public ResponseEntity<String> register(@RequestBody User user) {
-        boolean success = usersService.register(user);
-        if (success) {
-            return ResponseEntity.ok("注册成功");
-        } else {
-            return ResponseEntity.status(500).body("注册失败");
-        }
+    @Operation(summary = "根据ID获取用户信息", description = "此接口用于根据ID获取用户信息")
+    @ApiResponses(value = {
+          @ApiResponse(responseCode = "200", description = "成功返回基本信息", content = @Content(mediaType = "application/json")),
+          @ApiResponse(responseCode = "500", description = "服务器错误")
+    })
+    @Parameter(description = "/user/{id}", required = true, example = "getUserById()")
+    // 获取基本信息的接口
+    @GetMapping("/user/{id}")
+    public String getUserById(@PathVariable int id){
+        System.out.println(id);
+        return "根据ID获取用户信息";
     }
 
-    @PostMapping("/login")
-    public ResponseEntity<String> login(@RequestBody User user, HttpSession session, HttpServletResponse response) {
-        User loggedInUser = usersService.login(user.getUsername(), user.getPassword());
-        if (loggedInUser != null) {
-            // 将用户信息存储到 session 中
-            session.setAttribute("user", loggedInUser);
+    @PostMapping("/user")
+    public String save(User user) { return "添加用户"; }
 
-            // 手动设置新的 Cookie
-            Cookie sessionCookie = new Cookie("JSESSIONID", session.getId());
-            sessionCookie.setPath("/");
-            sessionCookie.setHttpOnly(false);
-            sessionCookie.setDomain("localhost"); // 设置为主机名即可
-            sessionCookie.setMaxAge(24 * 60 * 60); // 设置Cookie过期时间，单位为秒
-            response.addCookie(sessionCookie);
+    @PutMapping("/user")
+    public String update(User user) { return "更新用户"; }
 
-            // 打印刚刚设置的 Cookie 信息到控制台
-            System.out.println("Cookie Name: " + sessionCookie.getName());
-            System.out.println("Cookie Value: " + sessionCookie.getValue());
-            System.out.println("Cookie Path: " + sessionCookie.getPath());
-            System.out.println("Cookie HttpOnly: " + sessionCookie.isHttpOnly());
-
-            return ResponseEntity.ok("登录成功");
-        } else {
-            logger.info("用户 {} 登录失败，用户名或密码错误", user.getUsername());
-            return ResponseEntity.status(401).body("登录失败，用户名或密码错误");
-        }
+    @DeleteMapping("/user/{id}")
+    public String deleteById(@PathVariable int id){
+        System.out.println(id);
+        return "根据ID删除用户";
     }
-
-    @GetMapping("/session")
-    public ResponseEntity<String> getSessionInfo(HttpSession session) {
-        // 获取用户信息
-        User user = (User) session.getAttribute("user");
-        if (user == null) {
-            logger.info("用户未登录");
-            return ResponseEntity.status(401).body("用户未登录");
-        } else {
-            // 输出会话信息到控制台
-            logger.info("会话 ID: {}", session.getId());
-            logger.info("会话创建时间: {}", session.getCreationTime());
-            logger.info("会话最后访问时间: {}", session.getLastAccessedTime());
-            logger.info("会话最大不活动间隔时间: {}", session.getMaxInactiveInterval());
-
-            // 输出会话中所有属性的名称
-            Enumeration<String> attributeNames = session.getAttributeNames();
-            while (attributeNames.hasMoreElements()) {
-                String attributeName = attributeNames.nextElement();
-                logger.info("会话属性: {} = {}", attributeName, session.getAttribute(attributeName));
-            }
-            logger.info("用户信息: {}", user);
-            return ResponseEntity.ok("用户已登录\n会话信息已输出到控制台");
-        }
-    }
-
-    @GetMapping("/status")
-    public ResponseEntity<String> getStatus(HttpSession session) {
-        User user = (User) session.getAttribute("user");
-        if (user != null) {
-            return ResponseEntity.ok("用户已登录");
-        } else {
-            return ResponseEntity.status(401).body("用户未登录");
-        }
-    }
-
-    @Autowired
-    private UsersMapper usersMapper;
-
-    // 查询所有用户：http://localhost:8088/api/users/findAllIpage
-    @GetMapping("findAllIpage")
-    public IPage findAllIpage(){
-        //设置起始值及每页条数
-        Page<User> page = new Page<>(0,2);
-        IPage iPage = usersMapper.selectPage(page,null);
-        return iPage;
-    }
-
-    // 查询所有用户：http://localhost:8088/api/users/findAll
-    @GetMapping("/findAll")
-    public ResponseEntity<List<User>> selectList() {
-        // 查询所有用户，传入 null 表示没有条件限制
-        List<User> users = usersMapper.selectList(null);
-        // 返回查询结果，HTTP 状态码 200 OK
-        return ResponseEntity.ok(users);
-    }
-
-    @GetMapping("/info")
-    public ResponseEntity<?> getUserInfo(HttpSession session) {
-        User user = (User) session.getAttribute("user");
-        if (user == null) {
-            return ResponseEntity.status(401).body("用户未登录");
-        }
-
-        // 从数据库获取最新的用户信息
-        User currentUser = usersMapper.selectById(user.getUserId());
-        if (currentUser == null) {
-            return ResponseEntity.status(404).body("用户不存在");
-        }
-
-        // 创建响应对象
-        Map<String, Object> response = new HashMap<>();
-        response.put("code", 200);
-        response.put("data", currentUser);
-        response.put("message", "success");
-
-        return ResponseEntity.ok(response);
-    }
-
-
-
-
 }
