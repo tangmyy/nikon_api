@@ -19,6 +19,6 @@ public class Blacklist {
     private LocalDateTime startTime; // 开始时间，默认为当前时间戳
     private LocalDateTime endTime; // 结束时间（可为空，代表永久封禁）
     private boolean isDeleted;              // 是否已删除，默认为 false
-    private LocalDateTime blacklistTIme; // 添加到黑名单的时间，默认为当前时间戳
+
 
 }

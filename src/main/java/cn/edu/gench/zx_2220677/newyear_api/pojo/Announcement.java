@@ -21,4 +21,5 @@ public class Announcement {
     private Long createdBy; // 创建公告的管理员 ID
     private LocalDateTime createdAt; // 创建时间，默认为当前时间戳
 
+
 }
