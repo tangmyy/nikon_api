@@ -91,6 +91,7 @@
             <version>3.5.5</version>
         </dependency>
 
+
         <!-- Openai -->
         <!--        <dependency>-->
         <!--            <groupId>io.springboot.ai</groupId>-->
