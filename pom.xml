@@ -90,7 +90,18 @@
             <artifactId>mybatis-plus-spring-boot3-starter</artifactId>
             <version>3.5.5</version>
         </dependency>
-
+        <!--  七牛 Java SDK  -->
+        <dependency>
+            <groupId>com.qiniu</groupId>
+            <artifactId>qiniu-java-sdk</artifactId>
+            <version>7.16.0</version>
+            <!--  确保是支持 Java 1.7 的版本  -->
+        </dependency>
+        <dependency>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
+            <version>2.11.0</version>
+        </dependency>
 
         <!-- Openai -->
         <!--        <dependency>-->

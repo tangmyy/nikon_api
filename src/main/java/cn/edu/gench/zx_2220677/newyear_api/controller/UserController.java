@@ -1,7 +1,5 @@
 package cn.edu.gench.zx_2220677.newyear_api.controller;
 
-import cn.edu.gench.zx_2220677.newyear_api.pojo.User;
-
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
