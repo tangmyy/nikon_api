@@ -21,9 +21,9 @@ CREATE TABLE album (
                        image_id BIGINT AUTO_INCREMENT PRIMARY KEY,                    -- 图片 ID
                        file_name VARCHAR(255) NOT NULL,                               -- 图片文件名
                        file_path VARCHAR(255) NOT NULL,                               -- 图片存储路径
-                       visibility ENUM('PUBLIC', 'PRIVATE') DEFAULT 'PUBLIC',        -- 图片可见性（公共、私人）
+                       is_public ENUM('PUBLIC', 'PRIVATE') DEFAULT 'PUBLIC',        -- 图片可见性（公共、私人）
                        description TEXT DEFAULT NULL,                                -- 图片描述
-                       tag VARCHAR(100) DEFAULT NULL,                            -- 标签名称（直接存储标签）
+                       tags VARCHAR(100) DEFAULT NULL,                            -- 标签名称（直接存储标签）
                        price DECIMAL(10, 2) NOT NULL,                              -- 图片单价
                        user_id BIGINT NOT NULL,                                       -- 上传用户 ID
                        is_deleted BOOLEAN DEFAULT FALSE,                              -- 是否已删除（软删除标志）
@@ -31,10 +31,10 @@ CREATE TABLE album (
 
 );
 -- 索引优化
-CREATE INDEX idx_user_visibility ON album (user_id, visibility);
+CREATE INDEX idx_user_visibility ON album (user_id, is_public);
 CREATE FULLTEXT INDEX idx_description ON album (description);  -- 为 description 字段创建全文索引
 CREATE INDEX idx_uploaded_time ON album (uploaded_time);  -- 按上传时间查询的索引
-CREATE INDEX idx_user_visibility_uploaded_time ON album (user_id, visibility, uploaded_time);  -- 用户ID+可见性+上传时间的复合索引
+CREATE INDEX idx_user_visibility_uploaded_time ON album (user_id, is_public, uploaded_time);  -- 用户ID+可见性+上传时间的复合索引
 
 -- 10.愿望单
 CREATE TABLE wishlist (

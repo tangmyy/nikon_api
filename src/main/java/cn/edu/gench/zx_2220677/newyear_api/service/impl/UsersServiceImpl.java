@@ -1,6 +1,6 @@
 package cn.edu.gench.zx_2220677.newyear_api.service.impl;
 
-import cn.edu.gench.zx_2220677.newyear_api.pojo.User;
+import cn.edu.gench.zx_2220677.newyear_api.pojo.Users;
 import cn.edu.gench.zx_2220677.newyear_api.mapper.UsersMapper;
 import cn.edu.gench.zx_2220677.newyear_api.service.UsersService;
 import cn.edu.gench.zx_2220677.newyear_api.util.PasswordUtil;
@@ -24,7 +24,7 @@ public class UsersServiceImpl implements UsersService {
     private PasswordEncoder passwordEncoder;
 
     @Override
-    public boolean register(User user) {
+    public boolean register(Users user) {
         // 注册前 检查
         if (isUsernameTaken(user.getUsername())) {
             logger.info("用户名 {} 已被占用", user.getUsername());
@@ -41,7 +41,7 @@ public class UsersServiceImpl implements UsersService {
         // 更新为 ↑ Security加密 不再使用 MD5加密
         // user.setPassword(PasswordUtil.encodePassword(user.getPassword()));
         // 默认role设为USER
-        user.setRole(User.Role.USER);
+        user.setRole(Users.Role.USER);
         user.setRegistrationTime(LocalDateTime.now());
 
         // 注入
@@ -57,8 +57,8 @@ public class UsersServiceImpl implements UsersService {
     }
 
     @Override
-    public User login(String username, String password) {
-        User user = usersMapper.findByUsername(username);
+    public Users login(String username, String password) {
+        Users user = usersMapper.findByUsername(username);
         if (user != null && passwordEncoder.matches(password, user.getPassword())) {
             logger.info("用户 {} 登录成功", username);
             return user;

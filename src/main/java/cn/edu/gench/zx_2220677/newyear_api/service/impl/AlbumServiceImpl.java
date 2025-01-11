@@ -9,7 +9,10 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.List;
 
 @Service
@@ -19,11 +22,13 @@ public class AlbumServiceImpl extends ServiceImpl<AlbumMapper, Album> implements
     private AlbumMapper albumMapper;
 
 
-    // 上传图片
     @Override
-    public Album uploadImage(Album album) {
-        // 七牛云传输
-        return albumMapper.uploadImage(album);
+    public String uploadImage(MultipartFile file, String isPublic, String description, String tagsJson, BigDecimal price, Long userId) throws IOException{
+        if (file.isEmpty()) {
+            return "上传失败，请选择一个文件";
+        }
+
+        return "上传成功";
     }
 
     // 根据标签查询图片

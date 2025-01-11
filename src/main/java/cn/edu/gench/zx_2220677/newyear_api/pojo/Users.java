@@ -12,7 +12,7 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 
-//@TableName("zhangxing") 为mybatis-plus 中的 BaesMapper<~~~>提供于类不同的表名若类名和表名相同则不需要注解
+//@TableName("users") 为mybatis-plus 中的 BaesMapper<~~~>提供于类不同的表名若类名和表名相同则不需要注解
 
 // @TableId(type = IdType.ASSIGN_ID)
 // @TableId(type = IdType.ASSIGN_UUID)
@@ -20,11 +20,10 @@ import java.time.LocalDateTime;
 // UUID：MyBatis Plus 自动生成 UUID 作为主键。
 // @TableField
 
-@TableName("users")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class User {
+public class Users {
 
     @TableId(type = IdType.AUTO)
 

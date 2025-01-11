@@ -1,16 +1,12 @@
 package cn.edu.gench.zx_2220677.newyear_api.controller;
 
-import cn.edu.gench.zx_2220677.newyear_api.pojo.User;
+import cn.edu.gench.zx_2220677.newyear_api.pojo.Users;
 import cn.edu.gench.zx_2220677.newyear_api.service.UsersService;
 import cn.edu.gench.zx_2220677.newyear_api.mapper.UsersMapper;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.Parameter;
-import io.swagger.v3.oas.annotations.media.Content;
-import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
@@ -26,9 +22,9 @@ import java.util.List;
 @CrossOrigin
 @RestController
 @RequestMapping("/api/users")
-public class UserController {
+public class UsersController {
 
-    private static final Logger logger = LoggerFactory.getLogger(UserController.class);
+    private static final Logger logger = LoggerFactory.getLogger(UsersController.class);
 
     @Autowired
     private UsersService usersService;
@@ -41,7 +37,7 @@ public class UserController {
     // @Parameter(description = "/register", required = true, example = "usersService.register(user)")
     // 注册接口
     @PostMapping("/register")
-    public ResponseEntity<String> register(@RequestBody User user) {
+    public ResponseEntity<String> register(@RequestBody Users user) {
         boolean success = usersService.register(user);
         if (success) {
             return ResponseEntity.ok("注册成功");
@@ -51,8 +47,8 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<String> login(@RequestBody User user, HttpSession session, HttpServletResponse response) {
-        User loggedInUser = usersService.login(user.getUsername(), user.getPassword());
+    public ResponseEntity<String> login(@RequestBody Users user, HttpSession session, HttpServletResponse response) {
+        Users loggedInUser = usersService.login(user.getUsername(), user.getPassword());
         if (loggedInUser != null) {
             // 将用户信息存储到 session 中
             session.setAttribute("user", loggedInUser);
@@ -81,7 +77,7 @@ public class UserController {
     @GetMapping("/session")
     public ResponseEntity<String> getSessionInfo(HttpSession session) {
         // 获取用户信息
-        User user = (User) session.getAttribute("user");
+        Users user = (Users) session.getAttribute("user");
         if (user == null) {
             logger.info("用户未登录");
             return ResponseEntity.status(401).body("用户未登录");
@@ -105,7 +101,7 @@ public class UserController {
 
     @GetMapping("/status")
     public ResponseEntity<String> getStatus(HttpSession session) {
-        User user = (User) session.getAttribute("user");
+        Users user = (Users) session.getAttribute("user");
         if (user != null) {
             return ResponseEntity.ok("用户已登录");
         } else {
@@ -120,16 +116,16 @@ public class UserController {
     @GetMapping("findAllIpage")
     public IPage findAllIpage(){
         //设置起始值及每页条数
-        Page<User> page = new Page<>(0,2);
+        Page<Users> page = new Page<>(0,2);
         IPage iPage = usersMapper.selectPage(page,null);
         return iPage;
     }
 
     // 查询所有用户：http://localhost:8088/api/users/findAll
     @GetMapping("/findAll")
-    public ResponseEntity<List<User>> selectList() {
+    public ResponseEntity<List<Users>> selectList() {
         // 查询所有用户，传入 null 表示没有条件限制
-        List<User> users = usersMapper.selectList(null);
+        List<Users> users = usersMapper.selectList(null);
         // 返回查询结果，HTTP 状态码 200 OK
         return ResponseEntity.ok(users);
     }
