@@ -2,6 +2,8 @@ package cn.edu.gench.zx_2220677.newyear_api.service;
 
 import cn.edu.gench.zx_2220677.newyear_api.pojo.Blacklist;
 import com.baomidou.mybatisplus.extension.service.IService;
+
+import java.time.LocalDateTime;
 import java.util.List;
 
 public interface BlacklistService extends IService<Blacklist> {
@@ -22,4 +24,6 @@ public interface BlacklistService extends IService<Blacklist> {
 
     // 添加黑名单用户
     boolean addUserToBlacklist(Blacklist blacklist);
+    // 更新黑名单用户的结束时间
+    boolean updateBlacklistEndTime(Long userId, LocalDateTime endTime);
 }

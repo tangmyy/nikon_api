@@ -3,6 +3,7 @@ package cn.edu.gench.zx_2220677.newyear_api.service.impl;
 import cn.edu.gench.zx_2220677.newyear_api.mapper.BlacklistMapper;
 import cn.edu.gench.zx_2220677.newyear_api.pojo.Blacklist;
 import cn.edu.gench.zx_2220677.newyear_api.service.BlacklistService;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -51,4 +52,16 @@ public class BlacklistServiceImpl extends ServiceImpl<BlacklistMapper, Blacklist
 
         return save(blacklist);
     }
+    @Override
+    public boolean updateBlacklistEndTime(Long userId, LocalDateTime endTime) {
+        // 创建更新包装器
+        UpdateWrapper<Blacklist> updateWrapper = new UpdateWrapper<>();
+        updateWrapper.eq("user_id", userId); // 设置更新条件为用户ID匹配
+
+        // 执行更新操作
+        Blacklist blacklist = new Blacklist();
+        blacklist.setEndTime(endTime);
+        return this.update(blacklist, updateWrapper);
+    }
+
 }

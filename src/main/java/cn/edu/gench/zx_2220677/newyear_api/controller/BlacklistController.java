@@ -59,4 +59,11 @@ public class BlacklistController {
         int count = blacklistService.countBlacklistRecordsByUserId(userId);
         return ResponseEntity.ok(count);
     }
+    // 更新黑名单用户的结束时间
+    @PutMapping("/update/{userId}")
+    public ResponseEntity<String> updateBlacklistEndTime(@PathVariable Long userId, @RequestParam LocalDateTime endTime) {
+        boolean isUpdated = blacklistService.updateBlacklistEndTime(userId, endTime);
+        return ResponseEntity.ok(isUpdated ? "更新成功" : "更新失败");
+    }
+
 }
