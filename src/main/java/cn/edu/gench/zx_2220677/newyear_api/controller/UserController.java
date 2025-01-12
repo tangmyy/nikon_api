@@ -21,7 +21,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Enumeration;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @CrossOrigin
 @RestController
@@ -134,6 +136,27 @@ public class UserController {
         return ResponseEntity.ok(users);
     }
 
+    @GetMapping("/info")
+    public ResponseEntity<?> getUserInfo(HttpSession session) {
+        User user = (User) session.getAttribute("user");
+        if (user == null) {
+            return ResponseEntity.status(401).body("用户未登录");
+        }
+
+        // 从数据库获取最新的用户信息
+        User currentUser = usersMapper.selectById(user.getUserId());
+        if (currentUser == null) {
+            return ResponseEntity.status(404).body("用户不存在");
+        }
+
+        // 创建响应对象
+        Map<String, Object> response = new HashMap<>();
+        response.put("code", 200);
+        response.put("data", currentUser);
+        response.put("message", "success");
+
+        return ResponseEntity.ok(response);
+    }
 
 
 

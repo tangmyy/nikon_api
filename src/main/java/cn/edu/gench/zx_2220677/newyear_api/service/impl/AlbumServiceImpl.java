@@ -8,9 +8,11 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import jakarta.annotation.Resource;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class AlbumServiceImpl extends ServiceImpl<AlbumMapper, Album> implements AlbumService {
 
     @Resource
