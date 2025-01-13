@@ -12,6 +12,8 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 
+import static cn.edu.gench.zx_2220677.newyear_api.pojo.Users.Status.ACTIVE;
+
 @Service
 public class UsersServiceImpl implements UsersService {
 
@@ -79,5 +81,40 @@ public class UsersServiceImpl implements UsersService {
         boolean isTaken = usersMapper.findByEmail(email) != null;
         logger.info("邮箱 {} 检查结果: {}", email, isTaken ? "已被占用" : "可用");
         return isTaken;
+    }
+
+    @Override
+    public Users getCurrentUser(Long userId) {
+        try {
+            // 从数据库获取用户信息
+            Users user = usersMapper.selectById(userId);
+
+            if (user == null) {
+                logger.warn("未找到ID为 {} 的用户", userId);
+                return null;
+            }
+
+            // 检查用户是否被删除
+            if (user.isDeleted()) {
+                logger.warn("用户 {} 已被删除", userId);
+                return null;
+            }
+
+//            // 检查用户状态
+//            if (user.getStatus() == Users.Status.BANNED) {
+//                logger.warn("用户 {} 已被封禁", userId);
+//                return null;
+//            }
+
+            // 清除敏感信息
+            user.setPassword(null); 
+
+            logger.info("成功获取用户 {} 的信息", userId);
+            return user;
+
+        } catch (Exception e) {
+            logger.error("获取用户信息时发生错误: {}", e.getMessage());
+            return null;
+        }
     }
 }

@@ -1,5 +1,6 @@
 package cn.edu.gench.zx_2220677.newyear_api.controller;
 
+import cn.edu.gench.zx_2220677.newyear_api.pojo.Users;
 import org.springframework.web.bind.annotation.*;
 
 
@@ -41,14 +42,14 @@ public class HelloController {
     }
 
     @RequestMapping(value = "/postTest3",method = RequestMethod.POST)
-    public String postTest3(User user){
+    public String postTest3(Users user){
         System.out.println(user);
         return "POST请求3";
     }
 
     // postTest1-3都是Raw格式 postTest4是json格式
     @RequestMapping(value = "/postTest4",method = RequestMethod.POST)
-    public String postTest4(@RequestBody User user){
+    public String postTest4(@RequestBody Users user){
         System.out.println(user);
         return "POST请求4";
     }

@@ -26,6 +26,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class Users {
 
+    public static Object Status;
     @TableId(type = IdType.AUTO)
 
     private Long userId;          // 用户 ID
@@ -50,4 +51,19 @@ public class Users {
         return "ADMIN".equals(this.role.toString());
     }
 
+    // 判断用户状态是否为激活状态
+    public boolean isActive() {
+        return "ACTIVE".equals(this.status);
+    }
+
+    // 判断用户是否已经删除
+    public boolean isDeleted() {
+        return this.isDeleted;
+    }
+
+    //用户状态枚举
+    public enum Status {
+        ACTIVE,
+        BANNED
+    }
 }

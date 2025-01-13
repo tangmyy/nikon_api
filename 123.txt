@@ -1,0 +1,145 @@
+package cn.edu.gench.zx_2220677.newyear_api.controller;
+
+import cn.edu.gench.zx_2220677.newyear_api.pojo.Wishlist;
+import cn.edu.gench.zx_2220677.newyear_api.pojo.Album;
+import cn.edu.gench.zx_2220677.newyear_api.service.AlbumService;
+import cn.edu.gench.zx_2220677.newyear_api.service.WishlistService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.math.BigDecimal;
+import java.util.List;
+
+@RestController
+@RequestMapping("/wishlist")
+public class WishlistController {
+
+    @Autowired
+    private WishlistService wishlistService;
+
+    @Autowired
+    private AlbumService albumService;
+
+    /**
+     * 添加图片到愿望单
+     *
+     * @param userId  用户ID（从Session或请求参数中获取）
+     * @param imageId 图片ID（路径参数）
+     * @return 响应结果
+     */
+    @PostMapping("/add/{imageId}")
+    public ResponseEntity<String> addToWishlist(
+            @RequestParam Long userId,
+            @PathVariable Long imageId) {
+        // 1. 校验参数
+        if (userId == null || imageId == null) {
+            return ResponseEntity.badRequest().body("用户ID或图片ID不能为空");
+        }
+
+        // 2. 检查是否重复添加
+        boolean exists = wishlistService.isWishlistItemExists(userId, imageId);
+        if (exists) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).body("该图片已存在于愿望单中");
+        }
+
+        // 3. 检查图片是否存在
+        Album album = albumService.getAlbumById(imageId);
+        if (album == null || album.getIsDeleted()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("图片不存在或已被删除");
+        }
+
+        // 4. 添加到愿望单
+        Wishlist wishlist = new Wishlist();
+        wishlist.setUserId(userId);
+        wishlist.setImageId(imageId);
+        wishlist.setAddTime(new java.util.Date());
+        boolean isAdded = wishlistService.addWishlistItem(wishlist);
+
+        if (isAdded) {
+            return ResponseEntity.ok("图片已成功添加到愿望单");
+        } else {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("添加失败，请稍后重试");
+        }
+    }
+
+    /**
+     * 从愿望单中移除图片
+     *
+     * @param userId  用户ID
+     * @param imageId 图片ID
+     * @return 响应结果
+     */
+    @DeleteMapping("/remove/{imageId}")
+    public ResponseEntity<String> removeFromWishlist(
+            @RequestParam Long userId,
+            @PathVariable Long imageId) {
+        // 1. 校验参数
+        if (userId == null || imageId == null) {
+            return ResponseEntity.badRequest().body("用户ID或图片ID不能为空");
+        }
+
+        // 2. 检查记录是否存在
+        boolean exists = wishlistService.isWishlistItemExists(userId, imageId);
+        if (!exists) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("愿望单中不存在该图片");
+        }
+
+        // 3. 删除愿望单记录
+        boolean isRemoved = wishlistService.removeWishlistItem(userId, imageId);
+        if (isRemoved) {
+            return ResponseEntity.ok("图片已成功从愿望单中移除");
+        } else {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("移除失败，请稍后重试");
+        }
+    }
+
+    /**
+     * 查询用户的愿望单
+     *
+     * @param userId 用户ID
+     * @return 愿望单中的图片列表
+     */
+    @GetMapping("/list")
+    public ResponseEntity<List<Album>> getWishlist(@RequestParam Long userId) {
+        // 1. 校验参数
+        if (userId == null) {
+            return ResponseEntity.badRequest().build();
+        }
+
+        // 2. 查询愿望单中的图片ID
+        List<Long> imageIds = wishlistService.getImageIdsByUserId(userId);
+        if (imageIds.isEmpty()) {
+            return ResponseEntity.ok(List.of()); // 返回空列表
+        }
+
+        // 3. 查询图片详情
+        List<Album> albums = albumService.getAlbumsByIds(imageIds);
+        return ResponseEntity.ok(albums);
+    }
+
+    /**
+     * 计算愿望单中所有图片的总价
+     *
+     * @param userId 用户ID
+     * @return 总价
+     */
+    @GetMapping("/totalPrice")
+    public ResponseEntity<BigDecimal> calculateWishlistTotalPrice(@RequestParam Long userId) {
+        // 1. 校验参数
+        if (userId == null) {
+            return ResponseEntity.badRequest().body(BigDecimal.ZERO);
+        }
+
+        // 2. 查询愿望单中的图片ID
+        List<Long> imageIds = wishlistService.getImageIdsByUserId(userId);
+        if (imageIds.isEmpty()) {
+            return ResponseEntity.ok(BigDecimal.ZERO);
+        }
+
+        // 3. 查询图片总价
+        BigDecimal totalPrice = albumService.calculateTotalPrice(imageIds);
+        return ResponseEntity.ok(totalPrice);
+    }
+}
