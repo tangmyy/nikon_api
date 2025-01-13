@@ -15,9 +15,4 @@ public interface CollectMapper extends BaseMapper<Collect> {
     // 查询用户是否收藏某张图片
     Collect findFavoriteByUserIdAndImageId(Long userId, Long imageId);
 
-    // 查询某张图片被收藏的总次数
-    Long countFavoritesByImageId(Long imageId);
-
-    // 查询某张图片被哪些用户收藏（管理员功能）
-    List<Long> findUserIdsByImageId(Long imageId);
 }

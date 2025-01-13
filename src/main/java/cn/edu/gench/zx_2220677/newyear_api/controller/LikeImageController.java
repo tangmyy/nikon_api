@@ -13,6 +13,20 @@ public class LikeImageController {
     @Autowired
     private LikeImageService likeImageService;
 
+    // 用户是否点赞过某图片
+    @GetMapping("/isLiked/{userId}/{imageId}")
+    public ResponseEntity<Boolean> checkIfLiked(@PathVariable Long userId, @PathVariable Long imageId) {
+        boolean isLiked = likeImageService.checkIfLiked(userId, imageId);
+        return ResponseEntity.ok(isLiked);
+    }
+
+    // // 用户对某图片历史评分
+    // @GetMapping("/value/{userId}/{imageId}")
+    // public ResponseEntity<Boolean> checkIfLiked(@PathVariable Long userId, @PathVariable Long imageId) {
+    //     boolean isLiked = likeImageService.checkIfLiked(userId, imageId);
+    //     return ResponseEntity.ok(isLiked);
+    // }
+
     /**
      * 用户点赞和评分图片
      * @param likeImage 点赞和评分记录实体
@@ -22,18 +36,6 @@ public class LikeImageController {
     public ResponseEntity<String> likeAndScoreImage(@RequestBody LikeImage likeImage) {
         boolean isSuccess = likeImageService.likeAndScoreImage(likeImage);
         return isSuccess ? ResponseEntity.ok("点赞和评分成功") : ResponseEntity.badRequest().body("点赞和评分失败");
-    }
-
-    /**
-     * 检查用户是否点赞过某图片
-     * @param userId 用户ID
-     * @param imageId 图片ID
-     * @return 用户是否点赞过
-     */
-    @GetMapping("/check/{userId}/{imageId}")
-    public ResponseEntity<Boolean> checkIfLiked(@PathVariable Long userId, @PathVariable Long imageId) {
-        boolean isLiked = likeImageService.checkIfLiked(userId, imageId);
-        return ResponseEntity.ok(isLiked);
     }
 
     /**
