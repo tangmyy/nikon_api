@@ -21,4 +21,5 @@ public class Announcement {
     private String content; // 公告内容
     private LocalDateTime createdTime; // 创建时间，默认为当前时间戳
 
+
 }
