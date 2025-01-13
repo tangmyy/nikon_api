@@ -16,16 +16,15 @@ public interface AlbumMapper extends BaseMapper<Album> {
     @Select("SELECT * FROM album WHERE is_public = 'PUBLIC' AND is_deleted = FALSE")
     List<Album> findAllPublicImages();
 
+    // 模糊搜索
+    @Select("SELECT * FROM album WHERE description LIKE CONCAT('%', #{keyword}, '%') OR tags LIKE CONCAT('%', #{keyword}, '%')")
+    List<Album> findByKeyword(@Param("keyword") String keyword);
+
+    // 查看用户私人的图片
+    @Select("SELECT * FROM album WHERE is_deleted = FALSE AND user_id = #{userId}")
+    List<Album> selectImagesByUserId(@Param("userId") Long userId);
 
 
-
-    // 根据标签查询图片
-    @Select("SELECT * FROM album WHERE tags = #{tag} AND is_deleted = FALSE")
-    List<Album> findImagesByTag(@Param("tag") String tag);
-
-    // 查看所有私人的图片
-    @Select("SELECT * FROM album WHERE is_public = 'PRIVATE' AND is_deleted = FALSE")
-    List<Album> findPrivateImages();
 
     // 按图片上传的时间查询（升序）
     @Select("SELECT * FROM album WHERE is_deleted = FALSE ORDER BY uploaded_time ASC")

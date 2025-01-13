@@ -69,6 +69,20 @@ public class AlbumServiceImpl extends ServiceImpl<AlbumMapper, Album> implements
     }
 
     @Override
+    public List<Album> FuzzySearch(String keyword) {
+        return albumMapper.findByKeyword(keyword);
+    }
+
+    @Override
+    public List<Album> findImagesByUserId(Long userId) {
+        return albumMapper.selectImagesByUserId(userId);
+    }
+
+
+
+
+
+    @Override
     public String deleteImage(Long imageId) {
         return "";
     }
@@ -78,10 +92,7 @@ public class AlbumServiceImpl extends ServiceImpl<AlbumMapper, Album> implements
         return "";
     }
 
-    @Override
-    public List<Album> findImagesByUserId(Long userId) {
-        return List.of();
-    }
+
 
 
     // 保存文件到上传文件路径

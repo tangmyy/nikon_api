@@ -54,6 +54,28 @@ public class AlbumController {
       return albumService.findAllImages();
    }
 
+   // Get 查询 模糊搜索
+   @GetMapping("/search")
+   public List<Album> searchGalleries(@RequestParam("keyword") String keyword,HttpSession session) {
+      Users user = (Users) session.getAttribute("user");
+      if (user == null) {
+         return null;
+      }
+      return albumService.FuzzySearch(keyword);
+   }
+
+   // Get 查询 查询个人图片
+   @GetMapping("/user")
+   public List<Album> findImagesByUserId(HttpSession session) {
+      Users user = (Users) session.getAttribute("user");
+      if (user != null) {
+         return albumService.findImagesByUserId(user.getUserId());
+
+      } else {
+         return null;
+      }
+   }
+
 
 
 }
