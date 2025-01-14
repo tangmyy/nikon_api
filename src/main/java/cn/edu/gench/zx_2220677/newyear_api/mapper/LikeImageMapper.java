@@ -9,6 +9,16 @@ import org.apache.ibatis.annotations.Update;
 
 public interface LikeImageMapper extends BaseMapper<LikeImage> {
 
+
+    // 查询评分是否存在
+    @Select("SELECT * FROM like_image WHERE user_id = #{userId} AND image_id = #{imageId}")
+    LikeImage findByUserIdAndImageId(@Param("userId") Long userId, @Param("imageId") Long imageId);
+
+    // 更新评分
+    @Update("UPDATE like_image SET value = #{value} WHERE user_id = #{userId} AND image_id = #{imageId}")
+    int updateScore(LikeImage likeImage);
+
+
     /**
      * 检查用户是否点赞过某图片
      * @param userId 用户ID
@@ -36,11 +46,5 @@ public interface LikeImageMapper extends BaseMapper<LikeImage> {
     @Select("SELECT COUNT(*) FROM like_image WHERE image_id = #{imageId} AND status = 'LIKED'")
     int countLikesForImage(@Param("imageId") Long imageId);
 
-    /**
-     * 更新评分
-     * @param likeImage 点赞和评分记录实体
-     * @return 影响行数
-     */
-    @Update("UPDATE like_image SET value = #{value} WHERE user_id = #{userId} AND image_id = #{imageId}")
-    int updateScore(LikeImage likeImage);
+
 }

@@ -79,21 +79,35 @@ public class AlbumServiceImpl extends ServiceImpl<AlbumMapper, Album> implements
     }
 
 
-
-
-
-    @Override
-    public String deleteImage(Long imageId) {
-        return "";
-    }
-
     @Override
     public String updateImage(Long imageId, String isPublic, String description, String tagsJson, BigDecimal price, Long userId) throws IOException {
-        return "";
+        // 通过ID查询图片
+        Album album = albumMapper.selectById(imageId);
+        if (album == null) {
+            return "图片未找到";
+        }
+        // 初始化 ObjectMapper
+        ObjectMapper objectMapper = new ObjectMapper();
+        List<String> tagsList = objectMapper.readValue(tagsJson, new TypeReference<List<String>>() {});
+        String tagsString = String.join(";", tagsList);
+
+        album.setDescription(description);
+        album.setTags(tagsString);
+        album.setIsPublic(isPublic);
+        albumMapper.updateImage(imageId, isPublic, description, tagsString, price);
+        return "更新成功";    }
+
+
+    @Override
+    public boolean deleteImage(Long imageId) {
+        try {
+            int rows = albumMapper.deleteById(imageId);
+            return rows > 0;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
     }
-
-
-
 
     // 保存文件到上传文件路径
     private void saveFile(MultipartFile file, String fileName) throws IOException {

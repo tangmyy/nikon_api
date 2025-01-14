@@ -18,11 +18,12 @@ public interface AlbumService extends IService<Album> {
     String uploadImage(MultipartFile file, String isPublic, String description, String tagsJson, BigDecimal price, Long userId) throws IOException;
 
     List<Album> findAllImages();
+
     List<Album> FuzzySearch(String keyword);
 
     List<Album> findImagesByUserId(Long userId);
 
-    String deleteImage(Long imageId);
+    boolean deleteImage(Long imageId);
     String updateImage(Long imageId, String isPublic, String description, String tagsJson, BigDecimal price, Long userId) throws IOException;
 
 

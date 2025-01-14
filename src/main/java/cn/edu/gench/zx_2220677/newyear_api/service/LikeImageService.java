@@ -2,7 +2,11 @@ package cn.edu.gench.zx_2220677.newyear_api.service;
 
 import cn.edu.gench.zx_2220677.newyear_api.pojo.LikeImage;
 
+
 public interface LikeImageService {
+
+    boolean saveRating(Long userId, Long imageId, Integer value);
+
     /**
      * 点赞和评分图片
      * @param likeImage 点赞和评分记录实体

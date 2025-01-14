@@ -18,7 +18,7 @@ public class LikeImage {
     private Long likeId;          // 点赞记录 ID
     private Long imageId;         // 图片 ID
     private Long userId;          // 用户 ID
-    private BigDecimal value;     // 评分
+    private Integer value;     // 评分
     private Status status;        // 点赞状态：LIKED 或 UNLIKED
     private LocalDateTime imageLikeTime;  // 点赞时间
 

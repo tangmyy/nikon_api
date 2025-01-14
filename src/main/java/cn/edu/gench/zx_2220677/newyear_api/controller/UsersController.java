@@ -29,6 +29,48 @@ public class UsersController {
     @Autowired
     private UsersService usersService;
 
+    @Operation(summary = "获取用户详情", description = "通过会话获取当前登录用户的详情")
+    @GetMapping("/info")
+    public ResponseEntity<Users> getUserInfo(HttpSession session) {
+        Users user = (Users) session.getAttribute("user");
+        if (user == null) {
+            logger.info("用户未登录");
+            return ResponseEntity.status(401).build();
+        }
+        logger.info("获取用户详情: {}", user);
+        return ResponseEntity.ok(user);
+    }
+
+    @Operation(summary = "更新用户信息", description = "允许用户更新自己的信息")
+    @PutMapping("/update")
+    public ResponseEntity<String> updateUser(@RequestBody Users updatedUser, HttpSession session) {
+
+        logger.info("从前端接收到的用户数据: {}", updatedUser);
+        Users currentUser = (Users) session.getAttribute("user");
+        if (currentUser == null) {
+            logger.info("用户未登录，无法更新信息");
+            return ResponseEntity.status(401).body("用户未登录");
+        }
+
+        // 确保当前用户只能修改自己的信息
+        if (!currentUser.getUserId().equals(updatedUser.getUserId())) {
+            logger.info("用户尝试更新其他用户的信息，操作被拒绝");
+            return ResponseEntity.status(403).body("禁止修改其他用户的信息");
+        }
+        // 更新用户信息
+        boolean updated = usersService.updateUser(updatedUser);
+        if (updated) {
+            // 更新成功后，同步会话中的用户信息
+            session.setAttribute("user", updatedUser);
+            logger.info("用户信息更新成功: {}", updatedUser);
+            return ResponseEntity.ok("用户信息更新成功");
+        } else {
+            logger.info("用户信息更新失败: {}", updatedUser);
+            return ResponseEntity.status(500).body("用户信息更新失败");
+        }
+    }
+
+
     @Operation(summary = "注册接口", description = "此接口用于用户注册接口")
     // @ApiResponses(value = {
     //       @ApiResponse(responseCode = "200", description = "成功注册", content = @Content(mediaType = "application/json")),

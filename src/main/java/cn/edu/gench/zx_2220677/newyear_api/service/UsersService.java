@@ -8,4 +8,8 @@ public interface UsersService {
     Users login(String username, String password);
     boolean isUsernameTaken(String username);
     boolean isEmailTaken(String email);
+
+    boolean updateUser(Users user);
+
+
 }

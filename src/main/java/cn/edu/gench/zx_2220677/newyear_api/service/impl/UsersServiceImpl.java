@@ -80,4 +80,13 @@ public class UsersServiceImpl implements UsersService {
         logger.info("邮箱 {} 检查结果: {}", email, isTaken ? "已被占用" : "可用");
         return isTaken;
     }
+
+    @Override
+    public boolean updateUser(Users user) {
+        // 调用 UsersMapper 的 update 方法更新用户信息
+        // 信息校验
+        int rowsUpdated = usersMapper.updateById(user);
+        return rowsUpdated > 0; // 返回是否更新成功
+    }
+
 }
